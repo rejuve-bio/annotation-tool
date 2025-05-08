@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 24 24" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<g id="Layer-1" vectornator:layerName="Layer 1">
+<path d="M3.62131 12.0384C3.62131 7.39169 7.38825 3.62474 12.035 3.62474C16.6818 3.62474 20.4487 7.39169 20.4487 12.0384C20.4487 16.6852 16.6818 20.4521 12.035 20.4521C7.38825 20.4521 3.62131 16.6852 3.62131 12.0384Z" fill="none" opacity="1" stroke="#dddddd" stroke-linecap="butt" stroke-linejoin="round" stroke-width="0.5" vectornator:layerName="Oval 1"/>
+<path d="M14.8009 9.32897M12.1178 10.5242M13.84 8.52605L15.7528 10.3539M11.8301 10.0305L14.0213 12.1995M10.5624 10.6425L13.3991 13.2165M10.2261 11.9295L12.2905 13.9752M8.61877 13.7694L10.2261 15.5567M7.39629 14.2648L9.98536 16.7415M14.2166 7.40771C14.2166 7.40771 14.9369 8.06113 15.6027 8.73598C16.2686 9.41082 16.8521 10.0305 16.8521 10.0305M17.1618 9.82916C14.953 11.4943 12.0923 8.69719 10.5624 10.6425C9.06488 12.5466 11.1133 14.827 9.98536 17.0567M14.2166 7.02021C12.913 9.72026 15.0376 11.6149 13.6665 13.2564C12.0173 15.2309 8.80683 12.8051 6.90825 14.2648M13.2167 11.1774" fill="none" opacity="1" stroke="#dddddd" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.6" vectornator:layerName="Curve 1"/>
+<path d="M15.3269 18.1471C15.3269 16.6146 16.5692 15.3723 18.1017 15.3723C19.6342 15.3723 20.8765 16.6146 20.8765 18.1471C20.8765 19.6796 19.6342 20.9219 18.1017 20.9219C16.5692 20.9219 15.3269 19.6796 15.3269 18.1471Z" fill="#dddddd" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Oval 2"/>
+<g opacity="1" vectornator:layerName="Group 1">
+<path d="M18.1125 16.6471L18.1071 18.1471" fill="none" opacity="1" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" vectornator:layerName="path 1"/>
+<path d="M18.1017 19.6471C18.1017 19.6471 18.1054 19.6471 18.1067 19.6471" fill="none" opacity="1" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" vectornator:layerName="path 2"/>
+</g>
+</g>
+</svg>
