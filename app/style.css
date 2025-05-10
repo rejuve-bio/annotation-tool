@@ -3,7 +3,7 @@
 @import "@yisehak-awm/schema-builder/dist/index.min.css";
 @import "@yisehak-awm/query-builder/dist/index.min.css";
 @import "highcharts/css/highcharts.css";
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 :root {
   --background: oklch(1 0 0);

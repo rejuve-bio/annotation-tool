@@ -38,16 +38,22 @@ import {
   QueryBuilderContext,
 } from "@yisehak-awm/query-builder";
 import { Button } from "./components/ui/button";
+import { annotationAPI } from "./api";
 
 dayjs.extend(RelativeTime);
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  const headers = {
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
+  };
+  const schema = await annotationAPI.get("api/schema", { headers }).json();
   const { getTheme } = await themeSessionResolver(request);
   const API_URL = process.env.API_URL || "";
   const ANNOTATION_URL = process.env.ANNOTATION_URL || "";
   return json({
     ENV: { API_URL, ANNOTATION_URL },
     theme: getTheme(),
+    schema,
   });
 }
 
@@ -146,7 +152,41 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
               {theme === Theme.DARK ? <Sun /> : <Moon />}
             </Button>
           </div>
-          <div className="relative flex-grow overflow-y-auto">{children}</div>
+          <div className="relative flex-grow overflow-y-auto">
+            <QueryBuilderContext.Provider
+              // value={{
+              //   nodeDefinitions: data ? data.schema.nodes : [],
+              //   edgeDefinitions: data ? data.schema.edges : [],
+              //   style: data ? generateNodeStyle(data?.schema.nodes) : {},
+              //   forms: data
+              //     ? data.schema.nodes.reduce((acc: any, n: any) => {
+              //         return { ...acc, [n.name]: n.inputs };
+              //       }, {})
+              //     : {},
+              // }}
+              value={{
+                nodeDefinitions:
+                  data?.schema?.nodes.map((n: any) => ({ ...n, id: n.name })) ||
+                  [],
+                edgeDefinitions: data?.schema?.edges || [],
+                style: data?.schema?.nodes
+                  ? generateNodeStyle(
+                      data?.schema?.nodes.map((n: any) => ({
+                        ...n,
+                        id: n.name,
+                      }))
+                    )
+                  : {},
+                forms: data
+                  ? data.schema.nodes.reduce((acc: any, n: any) => {
+                      return { ...acc, [n.name]: n.inputs };
+                    }, {})
+                  : {},
+              }}
+            >
+              {children}
+            </QueryBuilderContext.Provider>
+          </div>
         </div>
         <script
           dangerouslySetInnerHTML={{
@@ -163,20 +203,9 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const data: any = useLoaderData<typeof loader>();
-
   return (
     <ThemeProvider specifiedTheme={Theme.DARK} themeAction="/action/set-theme">
-      <QueryBuilderContext.Provider
-        value={{
-          nodeDefinitions,
-          edgeDefinitions,
-          style: generateNodeStyle(nodeDefinitions),
-          forms,
-        }}
-      >
-        <LayoutContent>{children}</LayoutContent>
-      </QueryBuilderContext.Provider>
+      <LayoutContent>{children}</LayoutContent>
     </ThemeProvider>
   );
 }

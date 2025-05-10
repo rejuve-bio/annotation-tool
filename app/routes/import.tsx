@@ -182,7 +182,7 @@ function Tool() {
 
     try {
       setBusy(true);
-      await ky.post("http://100.67.47.42:8001/api/load", {
+      await ky.post("http://100.67.47.42:8000/api/load", {
         body: formData,
       });
       toast.success("Data has been imported successfully!", {

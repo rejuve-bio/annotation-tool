@@ -5,7 +5,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const { _action, ...values } = Object.fromEntries(formData);
   const headers = {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Njc3NTcwMywianRpIjoiY2FjMWZkMjMtZjEzZC00YTUyLTk2YzItZDJhMDA3YTAwZmVlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzQ2Nzc1NzAzLCJjc3JmIjoiNjM0ZTYzN2UtNGUyMS00YjhjLTljNTktMTg4NzQ4ZGNjNTIwIiwiZXhwIjoxNzU1Nzc1NzAzLCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.47X8uwrh_kOCipOEGfdbBTYbI84CXPW_NfpatvFbJd4`,
   };
 
   try {
