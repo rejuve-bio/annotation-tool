@@ -13,7 +13,7 @@ import {
 import { Play } from "lucide-react";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
-import { annotationAPI } from "~/api";
+import { annotationAPI, loaderAPI } from "~/api";
 import { Button } from "~/components/ui/button";
 
 interface Config {
@@ -173,9 +173,7 @@ function Tool() {
 
     try {
       setBusy(true);
-      await annotationAPI.post("api/load", formData, {
-        baseURL: "http://100.67.47.42:8000/",
-      });
+      await loaderAPI.post("api/load", formData, {});
       toast.success("Data has been imported successfully!", {
         description: "You may now build queries and run annotations.",
       });
