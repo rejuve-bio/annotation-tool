@@ -93,6 +93,18 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
           <div className="p-4 bg-background border-e min-w-fit flex flex-col justify-between items-center">
             <ul>
               <li>
+                <NavLink to="/stats" className={c}>
+                  <Tooltip>
+                    <TooltipTrigger className="p-0" asChild>
+                      <CircleGauge size={24} />
+                    </TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={12}>
+                      Dashboard
+                    </TooltipContent>
+                  </Tooltip>
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/" className={c}>
                   <Tooltip>
                     <TooltipTrigger className="p-0" asChild>
@@ -124,18 +136,6 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={12}>
                       Data import
-                    </TooltipContent>
-                  </Tooltip>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/stats" className={c}>
-                  <Tooltip>
-                    <TooltipTrigger className="p-0" asChild>
-                      <CircleGauge size={24} />
-                    </TooltipTrigger>
-                    <TooltipContent side="right" sideOffset={12}>
-                      Dashboard
                     </TooltipContent>
                   </Tooltip>
                 </NavLink>
