@@ -37,7 +37,7 @@ import {
   QueryBuilderContext,
 } from "@yisehak-awm/query-builder";
 import { Button } from "./components/ui/button";
-import { annotationAPI } from "./api";
+import { annotationAPI, loaderAPI } from "./api";
 import ErrorBoundaryContent from "./components/error-boundary";
 import "./style.css";
 
@@ -47,12 +47,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const headers = {
     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
   };
-  const schema = (
-    await annotationAPI.get("api/schema", {
-      headers,
-      baseURL: "http://100.67.47.42:8000/",
-    })
-  ).data;
+  const schema = (await loaderAPI.get("api/schema", { headers })).data;
   const { getTheme } = await themeSessionResolver(request);
   const API_URL = process.env.API_URL || "";
   const ANNOTATION_URL = process.env.ANNOTATION_URL || "";
