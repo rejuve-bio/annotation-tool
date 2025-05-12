@@ -93,7 +93,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
           <div className="p-4 bg-background border-e min-w-fit flex flex-col justify-between items-center">
             <ul>
               <li>
-                <NavLink to="/stats" className={c}>
+                <NavLink to="/" className={c}>
                   <Tooltip>
                     <TooltipTrigger className="p-0" asChild>
                       <CircleGauge size={24} />
@@ -105,7 +105,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/" className={c}>
+                <NavLink to="/annotation" className={c}>
                   <Tooltip>
                     <TooltipTrigger className="p-0" asChild>
                       <Gem size={24} />

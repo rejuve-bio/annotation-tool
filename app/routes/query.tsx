@@ -1,6 +1,6 @@
 import { ReactFlowProvider } from "@xyflow/react";
 import { QueryBuilder } from "@yisehak-awm/query-builder";
-import { useRunQuery } from "./_index";
+import { useRunQuery } from "./annotation";
 import { useNavigate } from "@remix-run/react";
 
 export default function () {

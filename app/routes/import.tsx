@@ -179,7 +179,7 @@ function Tool() {
       toast.success("Data has been imported successfully!", {
         description: "You may now build queries and run annotations.",
       });
-      navigate("/stats");
+      navigate("/");
     } catch (e) {
       toast.error("Could not import data", {
         description:

@@ -39,7 +39,7 @@ import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
 import { useDataTable, DataTableColumnHeader } from "./data-table";
 import { Input } from "./ui/input";
 import { convert } from "colorizr";
-import { Annotation } from "../routes/_index";
+import { Annotation } from "../routes/annotation";
 import {
   Accordion,
   AccordionContent,
