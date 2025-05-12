@@ -38,6 +38,7 @@ import {
 } from "@yisehak-awm/query-builder";
 import { Button } from "./components/ui/button";
 import { annotationAPI } from "./api";
+import ErrorBoundaryContent from "./components/error-boundary";
 import "./style.css";
 
 dayjs.extend(RelativeTime);
@@ -834,3 +835,7 @@ const forms: NodeFormFieldsMap = {
     },
   ],
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}
