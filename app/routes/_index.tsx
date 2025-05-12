@@ -293,6 +293,7 @@ export const DeleteConfirmationDialog = ({
               value="delete"
               variant="destructive"
               type="submit"
+              className="text-white"
               busy={busy}
             >
               Yes, Delete
@@ -330,6 +331,7 @@ export const BulkDeleteConfirmationDialog = ({
               value="bulk_delete"
               variant="destructive"
               type="submit"
+              className="text-white"
               busy={busy}
             >
               Yes, Delete
