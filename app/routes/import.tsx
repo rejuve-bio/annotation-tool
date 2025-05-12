@@ -10,7 +10,6 @@ import {
   Schema,
   SchemaBuilder,
 } from "@yisehak-awm/schema-builder";
-import ky from "ky";
 import { Play } from "lucide-react";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
@@ -36,10 +35,6 @@ interface Config {
       type: string;
       path: string;
       format: string;
-    };
-    field_mapping: {
-      source_name: string;
-      target_name: string;
     };
   }[];
 }
@@ -147,12 +142,7 @@ function Tool() {
           input: {
             type: "file",
             path: dataSources.find((d) => d.id == c.table)?.file.name!,
-            format: "JSON",
-            // date_format: "yyyyMMdd",
-          },
-          field_mapping: {
-            source_name: sourceEntity.properties[sourceEntity.primaryKey!].col,
-            target_name: targetEntity.properties[targetEntity.primaryKey!].col,
+            format: "CSV",
           },
         });
 
