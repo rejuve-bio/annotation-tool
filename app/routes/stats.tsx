@@ -1,7 +1,7 @@
 import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
-import { annotationAPI } from "~/api";
+import { loaderAPI } from "~/api";
 import { ClientOnly } from "remix-utils/client-only";
 import Bar from "~/components/bar.client";
 import Chord from "~/components/chord.client";
@@ -14,6 +14,7 @@ interface SummaryData {
   edge_count: number;
   dataset_count: number;
   data_size: string;
+  imported_on: string;
   top_entities: {
     count: number;
     name: string;
@@ -40,7 +41,7 @@ export const loader: LoaderFunction = async ({
   const headers = {
     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
   };
-  const data: SummaryData = (await annotationAPI.get("kg-info", { headers }))
+  const data: SummaryData = (await loaderAPI.get("api/graph-info", { headers }))
     .data;
   data.top_entities = data.top_entities
     .sort((a, b) => b.count - a.count)
@@ -88,12 +89,14 @@ export default function () {
     <div className="px-12 py-4">
       <div className="mb-8">
         <h1 className="text-xl font-bold">Atomspace statistics</h1>
-        <p className="text-muted-foreground">Last updated: few seconds ago</p>
+        <p className="text-muted-foreground">
+          Last updated: {dayjs(data.imported_on).fromNow()}
+        </p>
       </div>
       <div className="grid grid-cols-3 gap-6 mb-6">
         <div className="border border-dashed rounded-lg p-4">
           <h2 className="font-bold mb-4">Top entities</h2>
-          <p className="text-2xl font-bold">72,801,737</p>
+          <p className="text-2xl font-bold">{data.node_count}</p>
           <p className="mb-6 text-foreground/40">Total number of entities</p>
           <ClientOnly fallback={"Loading ..."}>
             {() => (
@@ -106,7 +109,7 @@ export default function () {
         </div>
         <div className="border border-dashed rounded-lg p-4">
           <h2 className="font-bold mb-4">Top connections</h2>
-          <p className="text-2xl font-bold">109,945,245</p>
+          <p className="text-2xl font-bold">{data.edge_count}</p>
           <p className="mb-6 text-foreground/40">Total number of connections</p>
           <ClientOnly fallback={"Loading ..."}>
             {() => (
