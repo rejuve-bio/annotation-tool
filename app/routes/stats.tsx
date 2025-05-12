@@ -40,9 +40,8 @@ export const loader: LoaderFunction = async ({
   const headers = {
     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
   };
-  const data: SummaryData = await annotationAPI
-    .get("kg-info", { headers })
-    .json();
+  const data: SummaryData = (await annotationAPI.get("kg-info", { headers }))
+    .data;
   data.top_entities = data.top_entities
     .sort((a, b) => b.count - a.count)
     .slice(0, 10);

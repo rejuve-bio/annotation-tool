@@ -14,6 +14,7 @@ import ky from "ky";
 import { Play } from "lucide-react";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
+import { annotationAPI } from "~/api";
 import { Button } from "~/components/ui/button";
 
 interface Config {
@@ -182,8 +183,8 @@ function Tool() {
 
     try {
       setBusy(true);
-      await ky.post("http://100.67.47.42:8000/api/load", {
-        body: formData,
+      await annotationAPI.post("api/load", formData, {
+        baseURL: "http://100.67.47.42:8000/",
       });
       toast.success("Data has been imported successfully!", {
         description: "You may now build queries and run annotations.",
