@@ -10,7 +10,7 @@ san(Highcharts);
 dep(Highcharts);
 
 const options = {
-  chart: { styledMode: true },
+  chart: { styledMode: true, margin: 20 },
   title: {
     text: "",
   },
