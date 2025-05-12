@@ -95,7 +95,7 @@ export default function () {
         type: "custom",
         data: {
           id: n.id,
-          type: n.type,
+          qb_node_type: n.type,
           ...n.properties,
         },
         position: { x: 0, y: 0 },
