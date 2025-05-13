@@ -142,7 +142,7 @@ export const columns: ColumnDef<AnnotationListItem>[] = [
         >
           {status === "PENDING" && <Progress small className="me-4" />}
           {status === "FAILED" && (
-            <span className="me-2 rounded border border-destructive p-1 px-2 text-destructive">
+            <span className="me-2 rounded border border-destructive p-1 px-2 text-destructive whitespace-nowrap">
               <AlertTriangle size={16} className="mb-[3px] me-2 inline" />
               Failed
             </span>
@@ -344,10 +344,11 @@ export const useRunQuery = (id?: string) => {
           return {
             node_id: "a" + n.id.replaceAll("-", ""),
             id: n.data.id || "",
-            type: n.data.type,
+            type: n.data.qb_node_type,
             properties: Object.keys(n.data)
               .filter(
-                (k) => !["id", "type", "animate"].includes(k) && n.data[k]
+                (k) =>
+                  !["id", "qb_node_type", "animate"].includes(k) && n.data[k]
               )
               .reduce((acc, k) => ({ ...acc, [k]: n.data[k] }), {}),
           };
@@ -450,7 +451,7 @@ export async function action({ request }: ActionFunctionArgs) {
     }
     if (_action === "delete") {
       await annotationAPI.delete(`annotation/${values.id}`, { headers });
-      return redirect("/");
+      return redirect("/annotations");
     }
     if (_action === "bulk_delete") {
       const ids = (values.id as string).split(",");
@@ -459,7 +460,7 @@ export async function action({ request }: ActionFunctionArgs) {
         { annotation_ids: ids },
         { headers }
       );
-      return redirect("/");
+      return redirect("/annotations");
     }
   } catch (e: any) {
     const redirectTo = request.headers.get("Referer") || "/";
