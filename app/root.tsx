@@ -158,13 +158,15 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
             <QueryBuilderContext.Provider
               value={{
                 nodeDefinitions:
-                  data?.schema?.nodes.map((n: any) => ({ ...n, id: n.name })) ||
-                  [],
+                  data?.schema?.nodes?.map((n: any) => ({
+                    ...n,
+                    id: n.name,
+                  })) || [],
                 edgeDefinitions: data?.schema?.edges || [],
                 style: data?.schema?.nodes
                   ? generateNodeStyle(data?.schema?.nodes, true)
                   : {},
-                forms: data
+                forms: data?.schema?.nodes
                   ? data.schema.nodes.reduce((acc: any, n: any) => {
                       return { ...acc, [n.name]: n.inputs };
                     }, {})
