@@ -39,7 +39,7 @@ import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
 import { useDataTable, DataTableColumnHeader } from "./data-table";
 import { Input } from "./ui/input";
 import { convert } from "colorizr";
-import { Annotation } from "../routes/annotation";
+import { Annotation } from "../routes/annotations";
 import {
   Accordion,
   AccordionContent,
@@ -99,7 +99,7 @@ export default function Graph(props: BaseCytoscapeGraphProps) {
             const data = e.data();
             return data.nodes?.length > 1
               ? data.name
-              : data.nodes?.[0][`${data.type}_name`] || data.id;
+              : data.nodes?.[0]?.[`${data.type}_name`] || data.id;
           },
         },
       },

@@ -1,7 +1,7 @@
 import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { annotationAPI } from "~/api";
 import Graph from "../components/graph";
-import { Annotation, useRunQuery } from "./annotation";
+import { Annotation, useRunQuery } from "./annotations";
 import { useLoaderData, useNavigate, useRevalidator } from "@remix-run/react";
 import {
   Accordion,
