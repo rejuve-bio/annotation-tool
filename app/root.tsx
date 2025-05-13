@@ -156,28 +156,13 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
           </div>
           <div className="relative flex-grow overflow-y-auto">
             <QueryBuilderContext.Provider
-              // value={{
-              //   nodeDefinitions: data ? data.schema.nodes : [],
-              //   edgeDefinitions: data ? data.schema.edges : [],
-              //   style: data ? generateNodeStyle(data?.schema.nodes) : {},
-              //   forms: data
-              //     ? data.schema.nodes.reduce((acc: any, n: any) => {
-              //         return { ...acc, [n.name]: n.inputs };
-              //       }, {})
-              //     : {},
-              // }}
               value={{
                 nodeDefinitions:
                   data?.schema?.nodes.map((n: any) => ({ ...n, id: n.name })) ||
                   [],
                 edgeDefinitions: data?.schema?.edges || [],
                 style: data?.schema?.nodes
-                  ? generateNodeStyle(
-                      data?.schema?.nodes.map((n: any) => ({
-                        ...n,
-                        id: n.name,
-                      }))
-                    )
+                  ? generateNodeStyle(data?.schema?.nodes, true)
                   : {},
                 forms: data
                   ? data.schema.nodes.reduce((acc: any, n: any) => {
@@ -205,8 +190,10 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data: any = useLoaderData<typeof loader>();
+
   return (
-    <ThemeProvider specifiedTheme={Theme.LIGHT} themeAction="/action/set-theme">
+    <ThemeProvider specifiedTheme={data?.theme} themeAction="/action/set-theme">
       <LayoutContent>{children}</LayoutContent>
     </ThemeProvider>
   );
