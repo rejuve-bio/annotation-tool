@@ -60,7 +60,6 @@ export default function () {
 
   const colorMapping = useMemo(() => {
     if (!data.schema.nodes) return;
-    console.log("data", data.schema.nodes[0]);
     const uniqueNodeTypes = new Set(
       data.schema.nodes.map((n) => n.data.id as string)
     );

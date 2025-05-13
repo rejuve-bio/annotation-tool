@@ -5,7 +5,6 @@ import san from "highcharts/modules/sankey";
 import { Suspense } from "react";
 import { Theme, useTheme } from "remix-themes";
 
-console.log("dep", dep, Highcharts);
 san(Highcharts);
 dep(Highcharts);
 
