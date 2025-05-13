@@ -97,9 +97,7 @@ export default function Graph(props: BaseCytoscapeGraphProps) {
           color: theme == Theme.DARK ? "white" : "black",
           label: (e: any) => {
             const data = e.data();
-            return data.nodes?.length > 1
-              ? data.name
-              : data.nodes?.[0]?.[`${data.type}_name`] || data.id;
+            return data.name || data.id;
           },
         },
       },
