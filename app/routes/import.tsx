@@ -85,10 +85,14 @@ function Tool() {
       const entityProps = Object.values(data.properties).filter(
         (p) => p.checked
       );
-
+      const map: { [key: string]: string } = {};
       entityProps.map((p) => {
-        property_keys.push({ name: p.col, type: p.type });
+        if (map[p.col] == "text") return;
+        map[p.col] = p.type;
       });
+      property_keys.push(
+        ...Object.entries(map).map((e) => ({ name: e[0], type: e[1] }))
+      );
 
       vertices.push({
         label: data.name!,
@@ -96,11 +100,6 @@ function Tool() {
           type: "file",
           path: dataSources.find((d) => d.id == data.table)?.file.name!,
           format: "CSV",
-          // header: entityProps.map((e) => e.col),
-          // charset: "UTF-8",
-          // skipped_line: {
-          //   regex: "(^#|^//).*",
-          // },
         },
         id: data.properties[data.primaryKey!].col,
         null_values: ["NULL", "null", ""],
@@ -173,7 +172,9 @@ function Tool() {
 
     try {
       setBusy(true);
-      await loaderAPI.post("api/load", formData, {});
+      await loaderAPI.post("api/load", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       toast.success("Data has been imported successfully!", {
         description: "You may now build queries and run annotations.",
       });
