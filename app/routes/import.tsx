@@ -26,6 +26,8 @@ interface Config {
     };
     null_values: string[];
     id: string;
+    selected: string[];
+    field_mapping?: { [key: string]: string };
   }[];
   edges: {
     label: string;
@@ -36,6 +38,8 @@ interface Config {
       path: string;
       format: string;
     };
+    selected: string[];
+    field_mapping?: { [key: string]: string };
   }[];
 }
 
@@ -80,19 +84,22 @@ function Tool() {
     const vertex_labels: OutputSchema["vertex_labels"] = [];
     const edge_labels: OutputSchema["edge_labels"] = [];
 
+    const map: { [key: string]: string } = {};
+
     schema.nodes.map((n) => {
       const data = n.data as EntityData;
       const entityProps = Object.values(data.properties).filter(
         (p) => p.checked
       );
-      const map: { [key: string]: string } = {};
+
       entityProps.map((p) => {
-        if (map[p.col] == "text") return;
-        map[p.col] = p.type;
+        if (map[p.name || p.col] == "text") return;
+        map[p.name || p.col] = p.type;
       });
-      property_keys.push(
-        ...Object.entries(map).map((e) => ({ name: e[0], type: e[1] }))
-      );
+
+      const fieldMapping = entityProps.reduce((a, c) => {
+        return c.name ? { ...a, [c.col]: c.name } : a;
+      }, {});
 
       vertices.push({
         label: data.name!,
@@ -102,12 +109,16 @@ function Tool() {
           format: "CSV",
         },
         id: data.properties[data.primaryKey!].col,
+        selected: entityProps.map((p) => p.col),
         null_values: ["NULL", "null", ""],
+        field_mapping: fieldMapping,
       });
 
       vertex_labels.push({
         name: data.name!,
-        properties: entityProps.map((p) => p.col),
+        properties: entityProps
+          .map((p) => p.name || p.col)
+          .filter((p) => p !== "id"),
         nullable_keys: [],
         id_strategy: "customize_string",
       });
@@ -131,8 +142,13 @@ function Tool() {
         );
 
         relationProps.map((p) => {
-          property_keys.push({ name: p.col, type: p.type });
+          if (map[p.name || p.col] == "text") return;
+          map[p.name || p.col] = p.type;
         });
+
+        const fieldMapping = relationProps.reduce((a, c) => {
+          return c.name ? { ...a, [c.col]: c.name } : a;
+        }, {});
 
         edges.push({
           label: c.name!,
@@ -143,18 +159,24 @@ function Tool() {
             path: dataSources.find((d) => d.id == c.table)?.file.name!,
             format: "CSV",
           },
+          selected: relationProps.map((p) => p.col),
+          field_mapping: fieldMapping,
         });
 
         edge_labels.push({
           name: c.name!,
           source_label: sourceEntity.name as string,
           target_label: targetEntity.name as string,
-          properties: Object.values(c.properties)
-            .filter((p) => p.checked)
-            .map((p) => p.col),
+          properties: relationProps
+            .filter((p) => p.col !== "id")
+            .map((p) => p.name || p.col),
         });
       });
     });
+
+    property_keys.push(
+      ...Object.entries(map).map((e) => ({ name: e[0], type: e[1] }))
+    );
 
     const config: Config = { vertices, edges };
     const outputSchema: OutputSchema = {
