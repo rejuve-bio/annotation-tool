@@ -163,7 +163,7 @@ export default function () {
             layout={{
               name: "dagre",
               nodeDimensionsIncludeLabels: true,
-              rankSep: 0,
+              rankSep: 20,
               edgeSep: 0,
               rankDir: "LR",
             }}
