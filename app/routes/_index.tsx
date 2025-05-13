@@ -1,5 +1,5 @@
 import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import { loaderAPI } from "~/api";
 import { ClientOnly } from "remix-utils/client-only";
@@ -8,6 +8,8 @@ import Chord from "~/components/chord.client";
 import Graph from "~/components/graph";
 import { useMemo } from "react";
 import { Theme, useTheme } from "remix-themes";
+import { CloudUpload, Plus } from "lucide-react";
+import { Button } from "~/components/ui/button";
 
 interface SummaryData {
   node_count: number;
@@ -87,11 +89,25 @@ export default function () {
 
   return (
     <div className="px-12 py-4">
-      <div className="mb-8">
-        <h1 className="text-xl font-bold">Atomspace statistics</h1>
-        <p className="text-muted-foreground">
-          Last updated: {dayjs(data.imported_on).fromNow()}
-        </p>
+      <div className="flex justify-between mb-8">
+        <div>
+          <h1 className="text-xl font-bold">Atomspace statistics</h1>
+          <p className="text-muted-foreground">
+            Last updated: {dayjs(data.imported_on).fromNow()}
+          </p>
+        </div>
+        <div className="grid gap-2 grid-flow-col">
+          <Link to="/import">
+            <Button variant="outline">
+              <CloudUpload /> Upload data sources
+            </Button>
+          </Link>
+          <Link to="/query">
+            <Button>
+              <Plus /> Build a new query
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className="grid grid-cols-3 gap-6 mb-6">
         <div className="border border-dashed rounded-lg p-4">
