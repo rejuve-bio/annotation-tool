@@ -51,8 +51,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request);
   const API_URL = process.env.API_URL || "";
   const ANNOTATION_URL = process.env.ANNOTATION_URL || "";
+  const LOADER_URL = process.env.LOADER_URL || "";
   return json({
-    ENV: { API_URL, ANNOTATION_URL },
+    ENV: { API_URL, ANNOTATION_URL, LOADER_URL },
     theme: getTheme(),
     schema,
   });
@@ -105,7 +106,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/annotation" className={c}>
+                <NavLink to="/annotations" className={c}>
                   <Tooltip>
                     <TooltipTrigger className="p-0" asChild>
                       <Gem size={24} />
@@ -145,7 +146,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
               size="icon"
               variant="ghost"
               title="Toggle theme"
-              className="mb-2 text-foreground/30"
+              className="mb-2 text-foreground/30 [&_svg]:size-6"
               onClick={() =>
                 setTheme((t) => (t === Theme.DARK ? Theme.LIGHT : Theme.DARK))
               }
