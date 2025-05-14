@@ -9,7 +9,15 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import { CircleGauge, CloudUpload, Gem, Moon, Shapes, Sun } from "lucide-react";
+import {
+  CircleGauge,
+  CloudUpload,
+  Gem,
+  Moon,
+  Settings2,
+  Shapes,
+  Sun,
+} from "lucide-react";
 import { Toaster } from "./components/ui/sonner";
 import RelativeTime from "dayjs/plugin/relativeTime";
 import {
@@ -137,6 +145,18 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={12}>
                       Data import
+                    </TooltipContent>
+                  </Tooltip>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/settings" className={c}>
+                  <Tooltip>
+                    <TooltipTrigger className="p-0" asChild>
+                      <Settings2 size={24} />
+                    </TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={12}>
+                      Settings
                     </TooltipContent>
                   </Tooltip>
                 </NavLink>
