@@ -11,7 +11,8 @@ import { Theme, useTheme } from "remix-themes";
 import { CloudUpload, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 
-interface SummaryData {
+export interface SummaryData {
+  job_id: string;
   node_count: number;
   edge_count: number;
   dataset_count: number;
