@@ -182,7 +182,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
             __html: `window.ENV = ${JSON.stringify(data?.ENV)}`,
           }}
         />
-        <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <ScrollRestoration />
         <Scripts />
         <Toaster position="top-center" richColors />
