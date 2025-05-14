@@ -68,6 +68,7 @@ interface BaseCytoscapeGraphProps extends CytoscapeOptions {
     popupRef: React.RefObject<HTMLDivElement>;
     selectedNode: NodeSingular | EdgeSingular;
   }>;
+  hideControls?: boolean;
 }
 
 export default function Graph(props: BaseCytoscapeGraphProps) {
@@ -223,58 +224,60 @@ export default function Graph(props: BaseCytoscapeGraphProps) {
     <>
       <div ref={container} className="h-full w-full dotted-bg"></div>
       <Popup popupRef={popup} selectedNode={selectedNode} />
-      <div className="absolute bottom-6 left-12 flex items-end">
-        <div className="me-4 flex flex-col rounded-full border bg-background/60 p-1">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="link" onClick={zoomIn}>
-                <Plus className="h-5 w-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Zoom in</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="link" onClick={fitToView}>
-                <Maximize className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Fit to view</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="link" onClick={zoomOut}>
-                <Minus className="h-5 w-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Zoom out</TooltipContent>
-          </Tooltip>
+      {!props.hideControls && (
+        <div className="absolute bottom-6 left-12 flex items-end">
+          <div className="me-4 flex flex-col rounded-full border bg-background/60 p-1">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="link" onClick={zoomIn}>
+                  <Plus className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Zoom in</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="link" onClick={fitToView}>
+                  <Maximize className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Fit to view</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="link" onClick={zoomOut}>
+                  <Minus className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Zoom out</TooltipContent>
+            </Tooltip>
+          </div>
+          <div className="flex rounded-full border bg-background/60 p-1 px-6">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="me-2"
+                  size="icon"
+                  variant="link"
+                  onClick={exportImage}
+                >
+                  <Camera className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Save graph as image</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="link" onClick={dowloadGraphJSON}>
+                  <Download className="h-5 w-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Save graph JSON</TooltipContent>
+            </Tooltip>
+          </div>
+          {props.children}
         </div>
-        <div className="flex rounded-full border bg-background/60 p-1 px-6">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                className="me-2"
-                size="icon"
-                variant="link"
-                onClick={exportImage}
-              >
-                <Camera className="h-5 w-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Save graph as image</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="link" onClick={dowloadGraphJSON}>
-                <Download className="h-5 w-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Save graph JSON</TooltipContent>
-          </Tooltip>
-        </div>
-        {props.children}
-      </div>
+      )}
     </>
   );
 }
