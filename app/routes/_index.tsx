@@ -112,7 +112,9 @@ export default function () {
       <div className="grid grid-cols-3 gap-6 mb-6">
         <div className="border border-dashed rounded-lg p-4">
           <h2 className="font-bold mb-4">Top entities</h2>
-          <p className="text-2xl font-bold">{data.node_count}</p>
+          <p className="text-2xl font-bold">
+            {data.node_count.toLocaleString()}
+          </p>
           <p className="mb-6 text-foreground/40">Total number of entities</p>
           <ClientOnly fallback={"Loading ..."}>
             {() => (
@@ -125,7 +127,9 @@ export default function () {
         </div>
         <div className="border border-dashed rounded-lg p-4">
           <h2 className="font-bold mb-4">Top connections</h2>
-          <p className="text-2xl font-bold">{data.edge_count}</p>
+          <p className="text-2xl font-bold">
+            {data.edge_count.toLocaleString()}
+          </p>
           <p className="mb-6 text-foreground/40">Total number of connections</p>
           <ClientOnly fallback={"Loading ..."}>
             {() => (

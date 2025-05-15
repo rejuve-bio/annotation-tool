@@ -167,11 +167,17 @@ export default function Settings() {
                     <div className="flex gap-6 mb-2">
                       <p className="flex items-center">
                         <CircleDot size={16} className="inline me-2" />
-                        {row.getValue("node_count")} nodes
+                        {(
+                          row.getValue("node_count") as number
+                        ).toLocaleString()}{" "}
+                        nodes
                       </p>
                       <p className="flex items-center">
                         <ChevronsLeftRightEllipsis className="inline me-2" />
-                        {row.getValue("edge_count")} edges
+                        {(
+                          row.getValue("edge_count") as number
+                        ).toLocaleString()}{" "}
+                        edges
                       </p>
                     </div>
                     <p className="text-muted-foreground ">
