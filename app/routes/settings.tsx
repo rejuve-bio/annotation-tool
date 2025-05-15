@@ -12,9 +12,14 @@ import { Button } from "~/components/ui/button";
 import { SummaryData } from "./_index";
 import { loaderAPI } from "~/api";
 import Graph from "~/components/graph";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "sonner";
+import type { ColumnDef, Table as TableType } from "@tanstack/react-table";
+import {
+  MinimalDataTablePagination,
+  useDataTable,
+} from "~/components/data-table";
 
 const headers = {
   Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
@@ -33,6 +38,45 @@ export default function Settings() {
   const data: { selected_job_id: string; history: SummaryData[] } =
     useLoaderData<typeof loader>();
   const [currentJobId, setCurrentJobId] = useState(data.selected_job_id);
+
+  const columns: ColumnDef<SummaryData>[] = [
+    {
+      id: "job_id",
+      accessorKey: "job_id",
+    },
+    {
+      id: "node_count",
+      accessorKey: "node_count",
+    },
+    {
+      id: "edge_count",
+      accessorKey: "edge_count",
+    },
+    {
+      id: "imported_on",
+      accessorKey: "imported_on",
+    },
+    {
+      id: "schema",
+      accessorKey: "schema",
+    },
+    {
+      id: "selected",
+      accessorFn: (row) => (row.job_id === data.selected_job_id ? 2 : 1),
+    },
+  ];
+
+  const table: TableType<SummaryData> = useDataTable(columns, data.history, {
+    sorting: [
+      {
+        id: "selected",
+        desc: true,
+      },
+    ],
+    pagination: {
+      pageSize: 3,
+    },
+  });
 
   function colorMapping(graph: SummaryData["schema"]) {
     if (!graph.nodes) return;
@@ -95,53 +139,56 @@ export default function Settings() {
         <p className="text-muted-foreground mb-4">
           Select the atomspace you want to run annotation queries on
         </p>
-        <div className="grid grid-cols-3 gap-4">
-          {data.history.map((a) => (
-            <div
-              className={`relative border rounded-lg hover:border-foreground hover:cursor-pointer ${
-                a.job_id == currentJobId &&
-                " border-2 border-green-500 bg-green-500/5"
-              }`}
-              onClick={() => switchAtomspace(a.job_id)}
-            >
-              <div className="h-[200px] mb-2">
-                <Graph
-                  elements={a.schema}
-                  colorMapping={colorMapping(a.schema)}
-                  hideControls={true}
-                  layout={{
-                    name: "dagre",
-                    nodeDimensionsIncludeLabels: true,
-                    rankSep: 20,
-                    edgeSep: 0,
-                    rankDir: "LR",
-                  }}
-                ></Graph>
-              </div>
-              <div className="p-4">
-                <div className="flex gap-6 mb-2">
-                  <p className="flex items-center">
-                    <CircleDot size={16} className="inline me-2" />
-                    {a.node_count} nodes
-                  </p>
-                  <p className="flex items-center">
-                    <ChevronsLeftRightEllipsis className="inline me-2" />
-                    {a.edge_count} edges
-                  </p>
+        <div className="grid grid-cols-3 gap-4 mb-2">
+          {table.getRowModel().rows?.length
+            ? table.getRowModel().rows.map((row) => (
+                <div
+                  className={`relative border rounded-lg hover:border-foreground hover:cursor-pointer ${
+                    row.getValue("job_id") == currentJobId &&
+                    " border-2 border-green-500 bg-green-500/5"
+                  }`}
+                  onClick={() => switchAtomspace(row.getValue("job_id"))}
+                >
+                  <div className="h-[200px] mb-2">
+                    <Graph
+                      elements={row.getValue("schema")}
+                      colorMapping={colorMapping(row.getValue("schema"))}
+                      hideControls={true}
+                      layout={{
+                        name: "dagre",
+                        nodeDimensionsIncludeLabels: true,
+                        rankSep: 20,
+                        edgeSep: 0,
+                        rankDir: "LR",
+                      }}
+                    ></Graph>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex gap-6 mb-2">
+                      <p className="flex items-center">
+                        <CircleDot size={16} className="inline me-2" />
+                        {row.getValue("node_count")} nodes
+                      </p>
+                      <p className="flex items-center">
+                        <ChevronsLeftRightEllipsis className="inline me-2" />
+                        {row.getValue("edge_count")} edges
+                      </p>
+                    </div>
+                    <p className="text-muted-foreground ">
+                      Created {dayjs(row.getValue("imported_on")).fromNow()}
+                    </p>
+                  </div>
+                  {row.getValue("job_id") == currentJobId && (
+                    <CheckCircle2
+                      size={32}
+                      className="absolute bottom-2 right-2 fill-green-500 stroke-background"
+                    />
+                  )}
                 </div>
-                <p className="text-muted-foreground ">
-                  Created {dayjs(a.imported_on).fromNow()}
-                </p>
-              </div>
-              {a.job_id == currentJobId && (
-                <CheckCircle2
-                  size={32}
-                  className="absolute bottom-2 right-2 fill-green-500 stroke-background"
-                />
-              )}
-            </div>
-          ))}
+              ))
+            : "No atomspaces to choose from."}
         </div>
+        <MinimalDataTablePagination table={table} />
       </div>
     </div>
   );
