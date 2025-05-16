@@ -93,7 +93,7 @@ export default function () {
         <div>
           <h1 className="text-xl font-bold">Atomspace statistics</h1>
           <p className="text-muted-foreground">
-            Last updated: {dayjs(data.imported_on).fromNow()}
+            Created {dayjs(data.imported_on).fromNow()}
           </p>
         </div>
         <div className="grid gap-2 grid-flow-col">
