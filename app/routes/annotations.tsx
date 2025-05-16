@@ -362,7 +362,9 @@ export const useRunQuery = (id?: string) => {
     };
     try {
       const { annotation_id }: Annotation = (
-        await annotationAPI.post("query", JSON.stringify(requestJSON), {})
+        await annotationAPI.post("query", JSON.stringify(requestJSON), {
+          headers: { "content-type": "application/json" },
+        })
       ).data;
       return annotation_id;
     } catch (e: any) {
