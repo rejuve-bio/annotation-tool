@@ -1,14 +1,10 @@
 import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData, useRevalidator } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import {
   CheckCircle2,
   ChevronsLeftRightEllipsis,
-  Circle,
   CircleDot,
-  CloudUpload,
-  Plus,
 } from "lucide-react";
-import { Button } from "~/components/ui/button";
 import { SummaryData } from "./_index";
 import { loaderAPI } from "~/api";
 import Graph from "~/components/graph";
@@ -21,15 +17,9 @@ import {
   useDataTable,
 } from "~/components/data-table";
 
-const headers = {
-  Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
-};
-
-export const loader: LoaderFunction = async ({
-  request,
-}: LoaderFunctionArgs) => {
+export const loader: LoaderFunction = async () => {
   const data: { selected_job_id: string; history: SummaryData[] } = (
-    await loaderAPI.get("api/history", { headers })
+    await loaderAPI.get("api/history", {})
   ).data;
   return data;
 };
@@ -107,23 +97,14 @@ export default function Settings() {
   }
 
   async function switchAtomspace(job_id: string) {
-    toast.promise(
-      loaderAPI.post(
-        "api/select-job",
-        { job_id },
-        {
-          headers,
-        }
-      ),
-      {
-        loading: "Switching atomspace, please wait ...",
-        success: (data) => {
-          setCurrentJobId(job_id);
-          return `New atomspace selected.`;
-        },
-        error: "Could not switch atomspace, please try again.",
-      }
-    );
+    toast.promise(loaderAPI.post("api/select-job", { job_id }, {}), {
+      loading: "Switching atomspace, please wait ...",
+      success: () => {
+        setCurrentJobId(job_id);
+        return `New atomspace selected.`;
+      },
+      error: "Could not switch atomspace, please try again.",
+    });
   }
 
   return (

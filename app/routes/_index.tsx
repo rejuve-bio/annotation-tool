@@ -7,7 +7,6 @@ import Bar from "~/components/bar.client";
 import Chord from "~/components/chord.client";
 import Graph from "~/components/graph";
 import { useMemo } from "react";
-import { Theme, useTheme } from "remix-themes";
 import { CloudUpload, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 
@@ -41,11 +40,7 @@ export interface SummaryData {
 export const loader: LoaderFunction = async ({
   request,
 }: LoaderFunctionArgs) => {
-  const headers = {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
-  };
-  const data: SummaryData = (await loaderAPI.get("api/kg-info", { headers }))
-    .data;
+  const data: SummaryData = (await loaderAPI.get("api/kg-info", {})).data;
   data.top_entities = data.top_entities
     .sort((a, b) => b.count - a.count)
     .slice(0, 10);
@@ -56,7 +51,6 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function () {
-  const [theme] = useTheme();
   const data: SummaryData = useLoaderData<typeof loader>();
 
   const colorMapping = useMemo(() => {

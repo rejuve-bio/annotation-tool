@@ -13,7 +13,7 @@ import {
 import { Play } from "lucide-react";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
-import { annotationAPI, loaderAPI } from "~/api";
+import { loaderAPI } from "~/api";
 import { Button } from "~/components/ui/button";
 
 interface Config {

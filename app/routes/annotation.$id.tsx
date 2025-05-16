@@ -2,7 +2,7 @@ import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { annotationAPI } from "~/api";
 import Graph from "../components/graph";
 import { Annotation, useRunQuery } from "./annotations";
-import { useLoaderData, useNavigate, useRevalidator } from "@remix-run/react";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
 import {
   Accordion,
   AccordionContent,
@@ -44,11 +44,7 @@ interface Update {
 }
 
 export const loader: LoaderFunction = async (props: LoaderFunctionArgs) => {
-  const { request, params } = props;
-  const headers = {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
-  };
-  return (await annotationAPI.get(`annotation/${params.id}`, { headers })).data;
+  return (await annotationAPI.get(`annotation/${props.params.id}`, {})).data;
 };
 
 export default function () {

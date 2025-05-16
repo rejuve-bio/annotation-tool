@@ -44,11 +44,8 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
-const Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`;
-
 export const loader: LoaderFunction = async () => {
-  const headers = { Authorization };
-  return (await annotationAPI.get("history", { headers })).data;
+  return (await annotationAPI.get("history", {})).data;
 };
 
 export default function () {
@@ -363,15 +360,9 @@ export const useRunQuery = (id?: string) => {
         }),
       },
     };
-    const headers = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTc4MzkzOCwianRpIjoiZGRkY2ZlNWQtMGE3NC00OTQwLWIxMDMtMjk0ODVkOGJiNzY3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NCwibmJmIjoxNzM5NzgzOTM4LCJjc3JmIjoiYjAzMDRmOWItOGIxMS00YWZjLTg5YzgtNTlkM2RkYmUyODk3IiwiZXhwIjoxNzQ4NzgzOTM4LCJ1c2VyX2lkIjo0LCJlbWFpbCI6Inlpc2VoYWsuYXdAZ21haWwuY29tIn0.S5ZMP6HK1fet3N23CzzPJ-ebPODMdbjRGeQAOEaxr84`,
-      "content-type": "application/json",
-    };
     try {
       const { annotation_id }: Annotation = (
-        await annotationAPI.post("query", JSON.stringify(requestJSON), {
-          headers,
-        })
+        await annotationAPI.post("query", JSON.stringify(requestJSON), {})
       ).data;
       return annotation_id;
     } catch (e: any) {
@@ -442,15 +433,14 @@ interface QueryNodeListProps {
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const { _action, ...values } = Object.fromEntries(formData);
-  const headers = { Authorization };
 
   try {
     if (_action === "create") {
-      const data: any = await annotationAPI.post("query", {}, { headers });
+      const data: any = await annotationAPI.post("query", {}, {});
       return redirect(`/annotation/${data.id}/results`);
     }
     if (_action === "delete") {
-      await annotationAPI.delete(`annotation/${values.id}`, { headers });
+      await annotationAPI.delete(`annotation/${values.id}`, {});
       return redirect("/annotations");
     }
     if (_action === "bulk_delete") {
@@ -458,7 +448,7 @@ export async function action({ request }: ActionFunctionArgs) {
       await annotationAPI.post(
         `annotation/delete`,
         { annotation_ids: ids },
-        { headers }
+        {}
       );
       return redirect("/annotations");
     }
