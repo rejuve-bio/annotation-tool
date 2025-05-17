@@ -212,8 +212,8 @@
 }
 
 .dotted-bg {
-  background-image: radial-gradient(var(--border) 1px, transparent 1px);
-  background-size: 16px 16px;
+  background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 .navigation-indicator {
