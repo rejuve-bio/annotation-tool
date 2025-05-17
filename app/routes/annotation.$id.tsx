@@ -1,4 +1,8 @@
-import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  LoaderFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { annotationAPI } from "~/api";
 import Graph from "../components/graph";
 import { Annotation, useRunQuery } from "./annotations";
@@ -430,3 +434,7 @@ function ResultSummary(props: ResultSummaryProps) {
     </p>
   );
 }
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Generic annotation - Annotation result" }];
+};

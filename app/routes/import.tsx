@@ -59,13 +59,6 @@ interface OutputSchema {
   }[];
 }
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Annotation tool" },
-    { name: "description", content: "Annotation tool" },
-  ];
-};
-
 function Tool() {
   const { dataSources, setDataSources, isValid, schema } = useContext(Context);
   const [busy, setBusy] = useState(false);
@@ -266,3 +259,7 @@ export default function () {
     </Context.Provider>
   );
 }
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Generic annotation - Data importer" }];
+};

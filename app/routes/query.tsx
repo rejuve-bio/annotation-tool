@@ -1,7 +1,7 @@
 import { ReactFlowProvider } from "@xyflow/react";
 import { QueryBuilder } from "@yisehak-awm/query-builder";
 import { useRunQuery } from "./annotations";
-import { useNavigate } from "@remix-run/react";
+import { MetaFunction, useNavigate } from "@remix-run/react";
 
 export default function () {
   const navigate = useNavigate();
@@ -21,3 +21,7 @@ export default function () {
     </ReactFlowProvider>
   );
 }
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Generic annotation - Query builder" }];
+};

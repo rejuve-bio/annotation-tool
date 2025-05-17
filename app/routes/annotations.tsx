@@ -1,4 +1,8 @@
-import type { ActionFunctionArgs, LoaderFunction } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import {
   Form,
   Link,
@@ -377,13 +381,6 @@ export const useRunQuery = (id?: string) => {
   return { runQuery, busy };
 };
 
-export function meta() {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
-
 export interface Annotation {
   annotation_id: string;
   title: string;
@@ -468,3 +465,7 @@ export async function action({ request }: ActionFunctionArgs) {
     });
   }
 }
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Generic annotation - Saved annotations" }];
+};

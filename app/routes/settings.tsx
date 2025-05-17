@@ -1,4 +1,8 @@
-import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  LoaderFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import {
   CheckCircle2,
@@ -180,3 +184,7 @@ export default function Settings() {
     </div>
   );
 }
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Generic annotation - Settings" }];
+};

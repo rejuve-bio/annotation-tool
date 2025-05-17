@@ -1,4 +1,8 @@
-import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  LoaderFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import { loaderAPI } from "~/api";
@@ -215,4 +219,8 @@ const NodeProperties = ({
     );
 
   return <div ref={popupRef}></div>;
+};
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Generic annotation - Annotation statistics" }];
 };
