@@ -10,13 +10,14 @@ import {
   Schema,
   SchemaBuilder,
 } from "@yisehak-awm/schema-builder";
-import { Play } from "lucide-react";
+import { Play, Sparkles } from "lucide-react";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
 import { loaderAPI } from "~/api";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import useConfirm from "~/components/useConfirm";
 
 interface Config {
   vertices: {
@@ -66,6 +67,7 @@ function Tool() {
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
   const [writer, setWriter] = useState<"metta" | "neo4j" | "mork">("metta");
+  const [initialSchema, setInitialSchema] = useState<Schema | undefined>();
 
   function removeSource(id: string) {
     setDataSources((ss: DataSource[]) => ss.filter((s) => s.id !== id));
@@ -210,6 +212,48 @@ function Tool() {
 
   return (
     <div className="h-full w-full flex">
+      <div className="absolute top-6 right-6 z-50">
+        <div className="relative  p-[1px]">
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 rounded-lg bg-[conic-gradient(from_180deg,_red,_orange,_yellow,_green,_cyan,blue,_violet,_red)] pointer-events-none opacity-50"
+          ></span>
+          <Button
+            variant="outline"
+            className="relative overflow-hidden border-0 hover:cursor-pointer hover:bg-background"
+            onClick={useConfirm({
+              promise: () =>
+                loaderAPI
+                  .post(
+                    "api/suggest-schema",
+                    {
+                      dataSources: dataSources.map((d) => ({
+                        ...d,
+                        file: {
+                          name: d.file.name,
+                          size: d.file.size,
+                          type: d.file.type,
+                        },
+                      })),
+                    },
+                    {}
+                  )
+                  .then((data) => {
+                    setInitialSchema(data.data.schema);
+                  }),
+              prompt: `This will replace the current schema with an Ai generated suggestion.`,
+              action: "Yes, suggest schema!",
+              loading: "Generating schema from data sources ...",
+              success: "Schema suggestion generated from data sources!",
+              error:
+                "Something went wrong while generating schema, please try again",
+              variant: "default",
+            })}
+          >
+            <Sparkles className="inline" /> Suggest a schema
+          </Button>
+        </div>
+      </div>
       <div className="border-e  relative h-full flex flex-col">
         <div className="px-4 mt-4">
           <div className="flex items-center">
@@ -259,7 +303,10 @@ function Tool() {
         </div>
       </div>
       <div className="relative w-full h-full">
-        <SchemaBuilder />
+        <SchemaBuilder
+          initialNodes={initialSchema?.nodes}
+          initialEdges={initialSchema?.edges}
+        />
       </div>
     </div>
   );
