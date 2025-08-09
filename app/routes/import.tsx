@@ -15,6 +15,8 @@ import { useContext, useState } from "react";
 import { toast } from "sonner";
 import { loaderAPI } from "~/api";
 import { Button } from "~/components/ui/button";
+import { Label } from "~/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 
 interface Config {
   vertices: {
@@ -63,6 +65,7 @@ function Tool() {
   const { dataSources, setDataSources, isValid, schema } = useContext(Context);
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
+  const [writer, setWriter] = useState<"metta" | "neo4j" | "mork">("metta");
 
   function removeSource(id: string) {
     setDataSources((ss: DataSource[]) => ss.filter((s) => s.id !== id));
@@ -184,6 +187,7 @@ function Tool() {
     }
     formData.append("config", JSON.stringify(config));
     formData.append("schema_json", JSON.stringify(outputSchema));
+    formData.append("writer_type", writer);
 
     try {
       setBusy(true);
@@ -206,7 +210,7 @@ function Tool() {
 
   return (
     <div className="h-full w-full flex">
-      <div className="border-e  relative h-full flex flex-col pb-16">
+      <div className="border-e  relative h-full flex flex-col">
         <div className="px-4 mt-4">
           <div className="flex items-center">
             <div>
@@ -220,8 +224,30 @@ function Tool() {
         <div className="p-4 my-2 flex flex-col items-center ">
           <CSVuploader />
         </div>
-        <DatasourceList dataSources={dataSources} onRemove={removeSource} />
-        <div className="w-full absolute bottom-0 p-4">
+        <div className="grow overflow-auto">
+          <DatasourceList dataSources={dataSources} onRemove={removeSource} />
+        </div>
+        <div className="w-full bottom-0 p-4 border-t border-dashed">
+          <p className="text-sm font-bold mb-2">Writer type:</p>
+          <RadioGroup
+            className="px-2 mb-6 flex"
+            defaultValue={writer}
+            onValueChange={(v) => setWriter(v as typeof writer)}
+          >
+            <div className="flex items-center gap-3">
+              <RadioGroupItem value="metta" id="metta" />
+              <Label htmlFor="metta">Metta</Label>
+            </div>
+            <div className="flex items-center gap-3">
+              <RadioGroupItem value="neo4j" id="neo4j" />
+              <Label htmlFor="neo4j">Neo4j</Label>
+            </div>
+            <div className="flex items-center gap-3">
+              <RadioGroupItem value="mork" id="mork" />
+              <Label htmlFor="mork">Mork</Label>
+            </div>
+          </RadioGroup>
+
           <Button
             className="w-full shadow-lg"
             disabled={!isValid}
