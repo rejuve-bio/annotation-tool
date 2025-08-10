@@ -217,7 +217,7 @@ function Tool() {
         <div className="relative  p-[1px]">
           <span
             aria-hidden="true"
-            className="absolute inset-0 rounded-lg bg-[conic-gradient(from_180deg,_red,_orange,_yellow,_green,_cyan,blue,_violet,_red)] pointer-events-none opacity-50"
+            className="absolute inset-0 rounded-lg bg-[conic-gradient(from_0deg,_cyan,_violet,_cyan)] pointer-events-none opacity-50"
           ></span>
           <Button
             variant="outline"
