@@ -3,6 +3,7 @@
 @import "@yisehak-awm/query-builder/dist/index.min.css";
 @import "@yisehak-awm/schema-builder/dist/index.min.css";
 @import "highcharts/css/highcharts.css";
+@import "./sonner.css";
 
 @custom-variant dark (&:is(.dark *));
 
