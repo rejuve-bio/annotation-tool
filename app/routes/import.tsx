@@ -18,6 +18,7 @@ import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import useConfirm from "~/components/useConfirm";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 interface Config {
   vertices: {
@@ -336,3 +337,7 @@ export default function () {
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Data importer" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}

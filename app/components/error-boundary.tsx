@@ -18,6 +18,10 @@ export default function () {
             <li>Reload the page</li>
             <li>Check your internet connection</li>
             <li>Make sure your server is up and running</li>
+            <li>
+              If you are self-hosting, make sure your environment variables are
+              setup properly and pointing to correct ports.
+            </li>
           </ol>
         </div>
       </div>

@@ -13,6 +13,7 @@ import Graph from "~/components/graph";
 import { useMemo } from "react";
 import { CloudUpload, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 export interface SummaryData {
   job_id: string;
@@ -224,3 +225,7 @@ const NodeProperties = ({
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Annotation statistics" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}

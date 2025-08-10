@@ -20,6 +20,7 @@ import {
   MinimalDataTablePagination,
   useDataTable,
 } from "~/components/data-table";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 export const loader: LoaderFunction = async () => {
   const data: { selected_job_id: string; history: SummaryData[] } = (
@@ -188,3 +189,7 @@ export default function Settings() {
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Settings" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}

@@ -47,6 +47,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 export const loader: LoaderFunction = async () => {
   return (await annotationAPI.get("history", {})).data;
@@ -469,3 +470,7 @@ export async function action({ request }: ActionFunctionArgs) {
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Saved annotations" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}
