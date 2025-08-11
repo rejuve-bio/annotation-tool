@@ -123,7 +123,9 @@ function Tool() {
         properties: entityProps
           .map((p) => p.name || p.col)
           .filter((p) => p !== "id"),
-        nullable_keys: [],
+        nullable_keys: entityProps
+          .map((p) => p.name || p.col)
+          .filter((p) => p !== data.primaryKey),
         id_strategy: "customize_string",
       });
     });
