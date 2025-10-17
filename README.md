@@ -1,40 +1,22 @@
-# Welcome to Remix!
+# Custom Atomspace Builder
 
-- 📖 [Remix docs](https://remix.run/docs)
+### Instruction to run
+First create an .env file and define the LOADER_URL and ANNOTATION_URL variables.
 
-## Development
-
-Run the dev server:
+#### Run locally in development mode
 
 ```shellscript
 npm run dev
 ```
 
-## Deployment
-
-First, build your app for production:
+#### Run in production mode using docker
 
 ```sh
-npm run build
+docker build -t custom-atomspace-tool .
 ```
-
-Then run the app in production mode:
 
 ```sh
-npm start
+docker run -p 3000:3000 --env-file .env -d custom-atomspace-tool
 ```
 
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+Finally, navigate to https://localhost:3000 in your browser.
