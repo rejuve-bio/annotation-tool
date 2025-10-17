@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   ChevronsLeftRightEllipsis,
   CircleDot,
+  Database,
 } from "lucide-react";
 import { SummaryData } from "./_index";
 import { loaderAPI } from "~/api";
@@ -20,6 +21,7 @@ import {
   MinimalDataTablePagination,
   useDataTable,
 } from "~/components/data-table";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 export const loader: LoaderFunction = async () => {
   const data: { selected_job_id: string; history: SummaryData[] } = (
@@ -150,6 +152,10 @@ export default function Settings() {
                   </div>
                   <div className="p-4">
                     <div className="flex gap-6 mb-2">
+                      <p className="flex items-center px-3 py-1 bg-lime-500/10 rounded-lg border-lime-500/10 border">
+                        <Database size={14} className="inline me-2" />
+                        {row.original.writer_type}
+                      </p>
                       <p className="flex items-center">
                         <CircleDot size={16} className="inline me-2" />
                         {(
@@ -188,3 +194,7 @@ export default function Settings() {
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Settings" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}

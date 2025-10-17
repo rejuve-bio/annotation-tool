@@ -41,6 +41,7 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { io, Socket } from "socket.io-client";
 import Progress from "~/components/progress";
 import empty from "/empty-result.svg";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 interface Update {
   status: "COMPLETE" | "PENDING" | "FAILED";
@@ -438,3 +439,7 @@ function ResultSummary(props: ResultSummaryProps) {
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Annotation result" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}

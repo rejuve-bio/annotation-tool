@@ -2,6 +2,7 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { QueryBuilder } from "@yisehak-awm/query-builder";
 import { useRunQuery } from "./annotations";
 import { MetaFunction, useNavigate } from "@remix-run/react";
+import ErrorBoundaryContent from "~/components/error-boundary";
 
 export default function () {
   const navigate = useNavigate();
@@ -25,3 +26,7 @@ export default function () {
 export const meta: MetaFunction = () => {
   return [{ title: "Generic annotation - Query builder" }];
 };
+
+export function ErrorBoundary() {
+  return <ErrorBoundaryContent />;
+}
