@@ -22,6 +22,7 @@ export interface SummaryData {
   dataset_count: number;
   data_size: string;
   imported_on: string;
+  writer_type: string;
   top_entities: {
     count: number;
     name: string;
